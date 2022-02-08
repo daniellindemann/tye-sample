@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using NewApi.Web.Infrastructure;
+
 namespace NewApi.Web
 {
     public class Startup
@@ -23,6 +25,11 @@ namespace NewApi.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<WeatherClient>(client =>
+            {
+                client.BaseAddress = Configuration.GetServiceUri("newapi-api");
+            });
+            // services.AddScoped<WeatherClient>();
             services.AddControllersWithViews();
         }
 
